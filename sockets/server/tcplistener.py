@@ -70,6 +70,7 @@ class TcpListener:
             )
             self.__commandsThread.start()
         self.__running = True
+        self.serverStarted()
 
     # don't override              
     def __acceptThread(self):
@@ -124,8 +125,9 @@ class TcpListener:
         while True:
             try:
                 while True:
+                    # get message
                     data = client.sock.recv(self.packetSize).decode("latin1")
-                    if data[-8:] == "finised":
+                    if data[-8:] == "finished":
                         # marks end of message
                         msg += data[:-8]
                         break
@@ -147,26 +149,113 @@ class TcpListener:
 
 
     def cmdThread(self):
+        """
+        command thread
+        if hasCommands, server starts this thread to accept commands as input
+
+        Parameters
+        ----------
+        None
+        Return
+        ------
+        None
+        """
         pass
 
+    # dont override
     def getTcpClient(self, sock):
-        pass
+        '''
+        function to retrieve client object
+        compares socket to each socket in list of clients
+
+        Parameters
+        ----------
+        sock : socket
+            desired socket object
+        Return 
+        ------
+        client object with matching socket, None if no match
+        '''
+
+        for client in self.clients:
+            if client.sock == sock:
+                return client
+        return None
 
     def send(self, client, msg, doEncode=True):
-        pass
+        """
+        public send message function
+        calls send function for client parameter
 
+        Parameters
+        ----------
+        client : TCP-client
+            recipient client
+        msg : str or b
+            message to send
+        doEncode : bool
+            specity whether or not to encode message into bytes
+
+        Return
+        ------
+        None
+        """
+        client.send(self.packetSize, msg, doEncode)
+
+    # recommended to override
     def generateClientObject(self, clientSock, clientAddr):
-        pass
+        """
+        function to generate client object
+        should be overriden to generate object of tpye that inherits from tcp-client
 
+        Parameters
+        ----------
+        clientsock : socket
+            socket of client
+        clientAddr : address
+            address of client
+
+        Return
+        ------
+        client object inherited from tcpclient with clientsock, clientAddr
+        """
+        return TcpClient(clientSock, clientAddr)
+
+    # override this
     def serverStarted(self):
+        """
+        server started event callback
+        when server is fully started, the program calls this function
+
+        Parameters
+        ----------
+        None
+        Return
+        ------
+        None
+        """
         pass
 
+    # override this
     def clientConnected(self, client):
         pass
-
+    # override this
     def clientDisconnected(self, client):
-        pass
+        """
+        client disconnected event callbacl
+        when a client disconnects, the program calls this function
 
+        Parameters
+        ----------
+        client : TcpClient
+            client that disconnected
+
+        Return 
+        ------
+        None
+        """
+        pass 
+    # override this
     def msgReceived(self, client, msg):
         pass
 
