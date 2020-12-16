@@ -26,6 +26,7 @@ class TcpClient:
         self.addr = clientAddr
     # don't override   
     def send(self, packetSize, msg, doEncode=True):
+
         """
         public send message function
         sends message to client socket

@@ -74,6 +74,7 @@ class TcpListener:
 
     # don't override              
     def __acceptThread(self):
+
         """
         private accept thread function
         thread to accept incoming clients
@@ -107,6 +108,7 @@ class TcpListener:
 
 
     def __clientThread(self, client):
+
         """
         private client thread function
         initialized for each client to handle communications
@@ -149,6 +151,7 @@ class TcpListener:
 
 
     def cmdThread(self):
+
         """
         command thread
         if hasCommands, server starts this thread to accept commands as input
@@ -164,6 +167,7 @@ class TcpListener:
 
     # dont override
     def getTcpClient(self, sock):
+
         '''
         function to retrieve client object
         compares socket to each socket in list of clients
@@ -183,6 +187,7 @@ class TcpListener:
         return None
 
     def send(self, client, msg, doEncode=True):
+
         """
         public send message function
         calls send function for client parameter
