@@ -1,5 +1,5 @@
 import socket, threading
-from tcpclient model import TcpClient
+from .tcpclientmodel import TcpClient
 
 class TcpListener:
     def __init__(self, idAddr, port, packetSize, hasCommands=False):

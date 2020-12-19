@@ -1,8 +1,9 @@
+
 import sys
 
-sys.path.append(f"C:\Users\Hans\Desktop\CVED\development\python\projects\TCP-network")
+sys.path.append(r"C:\Users\Hans\Desktop\CVED\development\python\projects\TCP-network\sockets")
 
-from michaelg.networking.sockets.server.tcplistener import TcpListener
+from server.tcplistener import TcpListener
 
 class ChatServer(TcpListener):
     pass

@@ -1,3 +1,4 @@
-from .chatserver import ChatServer
+
+from chatserver import ChatServer
 
 print("Hello")
